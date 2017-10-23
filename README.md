@@ -60,10 +60,9 @@ your handler to it:
 #!/bin/env python
 # -*- coding: utf8 -*-
 
-import random
-import SocketServer
+import socksetserver as SocketServer
 
-from pyicap import *
+from pyicap import ICAPServer, BaseICAPRequestHandler, ICAPError
 
 class ThreadingSimpleServer(SocketServer.ThreadingMixIn, ICAPServer):
     pass
