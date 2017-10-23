@@ -144,17 +144,17 @@ certain fields of the handler object:
 * `request_uri`: contains the full request URI of the ICAP request
 * `version`: the version if the current ICAP request
 * `preview`: None, or an integer that arrived in the Preview header
-* `allow`: Contains a set() of Allow:-ed stuff
+* `allow`: contains a set() of Allow:-ed stuff
 * `icap_response_code`: contains the response code if `set_icap_reponse`
   was called.
 
 There are several helper methods that can be called while serving a
 request:
 
-* `send_error(error_code)`: Sends and entire ICAP error response
+* `send_error(error_code)`: Sends an entire ICAP error response
 * `no_adaptation_required()`: Sends a response that means that leaves the
   encapsulated message unaltered. It honors the Allow header, and only
-  sends 204 No adaptation required if the client allowed such response.
+  sends 204 No adaptation required if the client allowed such a response.
 * `cont()`: Sends an ICAP 100 Continue response to the client. Can be
   used to request the client to continue sending data after a preview.
 * `read_chunk()`: Reads a chunk from the client. Be aware that this call
@@ -163,11 +163,11 @@ request:
   should only be called if it's sure there will be data available
   eventually. If it returns an empty string, it means that it's the
   last chunk, and no further read should be executed. It also sets the
-  ieof variable to True, if the ieof chunk extension is encountered.
+  ieof variable to True if the `ieof` chunk extension is encountered.
   This extension is sent during a preview if the encapsulated message
-  fits in the preview entirelly. If `ieof` is True `continue()` must not be
+  fits in the preview entirely. If `ieof` is True, `continue()` must not be
   called.
-* `set_icap_response(code)`: sets the ICAP response
+* `set_icap_response(code)`: Sets the ICAP response
 * `set_enc_status(stats)`: Sets the encapsulated status line
 * `set_enc_request(request)`: Sets the encapsulated request line
 * `set_enc_header(header, value)`: Set an encapsulated header. Multiple
@@ -177,13 +177,13 @@ request:
   not be used normally, since all necesary ICAP headers are set
   automatically by the framework (such as ISTag, Encapsulated, Date,
   Server, etc.)
-* `send_headers(has_body=False)`: can be used after setting ICAP and
+* `send_headers(has_body=False)`: Can be used after setting ICAP and
   encapsulated headers. The parameter `has_body` signals the existance of
   an encapsulated message body.
-* `send_chunk(data)`: writes a chunk to the client. An empty chunk must
+* `send_chunk(data)`: Writes a chunk to the client. An empty chunk must
   be written as the last chunk. Data must be sent after send appropriate
   headers either with `send_header()` or `enc_header()`/`icap_header()` +
   `send_headers()`. The two header-sending methods must not be mixed.
-  If sending data with send_headers, the `has_body` parameter must be set
+  If sending data with `send_headers`, the `has_body` parameter must be set
   to properly indicate the existance or absence of an encapsulated
   message body.
